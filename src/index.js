@@ -79,13 +79,16 @@ function transpileTemplateSpecial(
   content,
   lang
 ) {
+  const spawnArgs = [
+    join(__dirname, './renderTemplate.js'),
+    lang,
+    content
+  ];
+  if (globalConfig[lang]) spawnArgs.push(JSON.stringify(globalConfig[lang]));
+
   const result = spawnSync(
     process.execPath,
-    [
-      join(__dirname, './renderTemplate.js'),
-      lang,
-      content,
-    ],
+    spawnArgs,
     {
       encoding: 'utf-8',
     }
